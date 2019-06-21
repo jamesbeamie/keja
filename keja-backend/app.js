@@ -1,12 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const graphqlHttp = require('express-graphql');
+const { buildSchema } = require('graphql');
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res, next) => {
-    res.send('Keja running on port 3000')
-})
+app.use('/graphql', graphqlHttp({
+    // schema (schemas and their type definitions)
+    schema: buildSchema(`
+    
+        type rootQuery{
+            homes: [String!]!
+        }
+        type rootMutation{
+            addHome(name: String): String
+        }
 
-app.listen(3000);
+        schema{
+            query: rootQuery
+            mutation: rootMutation
+        }
+    `),
+
+    // resolvers (and should have the same name as their type definition)
+    rootValue: {
+        homes: () => {
+            return ['Qwetu', 'Grace']
+        },
+        addHome: (args) =>{
+            const homeName = args.name
+            return homeName;
+        }
+    },
+    graphiql: true
+}));
+
+app.listen(3001);
