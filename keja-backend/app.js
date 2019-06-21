@@ -5,17 +5,34 @@ const { buildSchema } = require('graphql');
 
 const app = express();
 
+const homes = []
+
 app.use(bodyParser.json());
 
 app.use('/graphql', graphqlHttp({
-    // schema (schemas and their type definitions)
+    // schema (schemas and their types and type definitions)
+    // type definition is how the home will look like
     schema: buildSchema(`
+        type Home{
+            _id: ID!
+            name: String!
+            homeType: String!
+            price: Float!
+            datePosted: String!
+        }
+
+        input HomeInput {
+            name: String!
+            homeType: String!
+            price: Float!
+            datePosted: String!
+        }
     
         type rootQuery{
-            homes: [String!]!
+            homes: [Home!]!
         }
         type rootMutation{
-            addHome(name: String): String
+            addHome(homeInput: HomeInput): Home
         }
 
         schema{
@@ -27,11 +44,18 @@ app.use('/graphql', graphqlHttp({
     // resolvers (and should have the same name as their type definition)
     rootValue: {
         homes: () => {
-            return ['Qwetu', 'Grace']
+            return homes;
         },
         addHome: (args) =>{
-            const homeName = args.name
-            return homeName;
+            const newHome = {
+                _id: Math.random().toString(),
+                name: args.homeInput.name,
+                homeType: args.homeInput.homeType,
+                price: +args.homeInput.price,
+                datePosted: args.homeInput.date,
+            };
+            homes.push(newHome);
+            return newHome;
         }
     },
     graphiql: true
