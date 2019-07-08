@@ -1,5 +1,10 @@
 const { buildSchema } = require('graphql');
 const graphQLSchema = buildSchema(`
+type Booking {
+    home: Home!
+    user: User!
+}
+
 type Home{
     _id: ID!
     name: String!
@@ -30,10 +35,13 @@ input HomeInput {
 
 type rootQuery{
     homes: [Home!]!
+    bookings: [Booking!]!
 }
 type rootMutation{
     addHome(homeInput: HomeInput): Home
     createUser(userInput: UserInput): User
+    bookHome(homeId: ID!): Booking!
+    cancelBooking(bookingId: ID!): Home!
 }
 
 schema{
