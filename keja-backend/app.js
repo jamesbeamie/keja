@@ -3,10 +3,8 @@ const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
 
-const Home = require('./models/home');
-const User = require('./models/user');
 const graphQLSchema = require('./graphql/schema/index');
-const graphQLresolver = require('./graphql/resolvers/index');
+const rootResolver = require('./graphql/resolvers/index');
 
 const app = express();
 
@@ -20,11 +18,11 @@ app.use('/graphql', graphqlHttp({
     schema: graphQLSchema,
 
     // resolvers (and should have the same name as their type definition)
-    rootValue: graphQLresolver,
+    rootValue: rootResolver,
     graphiql: true
 }));
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-fhwxu.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-fhwxu.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, { useNewUrlParser: true })
 .then(() =>{
     // console.log('connected')
     app.listen(3001);
