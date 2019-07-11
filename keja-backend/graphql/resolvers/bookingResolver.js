@@ -3,7 +3,11 @@ const Booking = require('../../models/bookings');
 const { singleHome, user, transformHome} = require('./merge');
 
 const bookingResolver = {
-    bookings: async () => {
+    bookings: async (args, req) => {
+        if(!req.isAuth){
+            throw new Error('Unauthenticated');
+        }
+
         try{
             const bookings = await Booking.find();
             return bookings.map(booking => {
@@ -21,10 +25,13 @@ const bookingResolver = {
         }
     },
 
-    bookHome: async args => {
+    bookHome: async (args, req) => {
+        if(!req.isAuth){
+            throw new Error('Unauthenticated');
+        }
         const fetchedHome = await Home.findOne({_id: args.homeId});
        const booking = new Booking({
-           user:'5d1475e80b6be54627b116a3',
+           user: req.userId,
            home: fetchedHome
        }); 
        const result = await booking.save();
@@ -38,7 +45,10 @@ const bookingResolver = {
         }
     },
 
-    cancelBooking: async args => {
+    cancelBooking: async (args, req) => {
+        if(!req.isAuth){
+            throw new Error('Unauthenticated');
+        }
         try{
             const abooking = await Booking.findById(args.bookingId).populate('home');
             const home = transformHome(abooking.home)

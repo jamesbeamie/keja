@@ -1,4 +1,5 @@
 const Home = require('../../models/home');
+const User = require('../../models/user');
 const { transformHome } = require('../resolvers/merge');
 
 
@@ -14,13 +15,16 @@ const homeResolver = {
         }
     },
 
-    addHome: async args => {
+    addHome: async (args, req) => {
+        if(!req.isAuth){
+            throw new Error('Unauthenticated');
+        }
         const newHome = new Home({
             name: args.homeInput.name,
             homeType: args.homeInput.homeType,
             price: +args.homeInput.price,
             // datePosted: new Date(args.homeInput.date)
-            creator: '5d1475e80b6be54627b116a3'
+            creator: req.userId
         });
         let createdHome;
         try{
@@ -28,7 +32,7 @@ const homeResolver = {
         const res = await newHome
         .save()
             createdHome = transformHome(res);
-            const creator = await User.findById('5d1475e80b6be54627b116a3')
+            const creator = await User.findById(req.userId)
             // console.log(res)
             // return {...res._doc};
             if (!creator){
