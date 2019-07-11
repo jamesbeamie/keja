@@ -5,12 +5,15 @@ const mongoose = require('mongoose');
 
 const graphQLSchema = require('./graphql/schema/index');
 const rootResolver = require('./graphql/resolvers/index');
+const isAuth = require('./middleware/isAuth');
 
 const app = express();
 
 // const homes = []
 
 app.use(bodyParser.json());
+
+app.use(isAuth);
 
 app.use('/graphql', graphqlHttp({
     // schema (schemas and their types and type definitions)
