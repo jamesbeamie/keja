@@ -21,6 +21,13 @@ type User{
     createdHomes: [Home!]
 }
 
+
+type AuthData{
+    userId: ID!
+    token: String!
+    tokenExpires: Int!
+}
+
 input UserInput{
     userName: String!
     email: String!
@@ -36,6 +43,7 @@ input HomeInput {
 type rootQuery{
     homes: [Home!]!
     bookings: [Booking!]!
+    login(email: String!, password: String!): AuthData!
 }
 type rootMutation{
     addHome(homeInput: HomeInput): Home
