@@ -1,0 +1,53 @@
+.auth-form {
+	width: 25rem;
+	max-width: 80%;
+	margin: 5rem auto;
+}
+.form-control label,
+.form-control input {
+	color: green;
+	width: 100%;
+	display: block;
+}
+.form-control label {
+	margin-bottom: 0.5rem;
+}
+.form-control {
+	margin-bottom: 1rem;
+}
+.form-actions button {
+	color: white;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 3px 3px 5px rgb(3, 83, 88);
+}
+.form-actions button:hover {
+	color: grey;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 1px 1px 5px rgb(3, 83, 88);
+}
+.form-actions button:active {
+	color: red;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 1px 1px 5px rgb(3, 83, 88);
+	outline-style: none;
+	outline-color: white;
+}
+.form-actions a {
+	color: rgb(142, 153, 139);
+	text-decoration: none;
+}
+.form-actions a:hover {
+	color: rgb(99, 128, 92);
+}
