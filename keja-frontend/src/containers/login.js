@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import '../assets/styling/auth.css';
-class AuthPage extends Component {
-	state = {
-		isLogin: true
-	};
-
+class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 
 		// create refs to link input fields
 		this.emailEl = React.createRef();
 		this.passwordEl = React.createRef();
-		this.nameEl = React.createRef();
 	}
 
 	handleSignUp = (event) => {
 		event.preventDefault();
-		const username = this.nameEl.current.value;
 		const email = this.emailEl.current.value;
 		const password = this.passwordEl.current.value;
 
@@ -26,13 +20,12 @@ class AuthPage extends Component {
 
 		const requestBody = {
 			query: `
-                mutation {
-                    createUser(userInput: {email: "${email}", password: "${password}", userName: "${username}"}){
-                        _id
-                        userName
-                        email
+                query{
+                    login(email: "${email}", password: "${password}"){
+                      userId
+                      token
                     }
-                }
+                  }
             `
 		};
 
@@ -46,7 +39,7 @@ class AuthPage extends Component {
 		})
 			.then((res) => {
 				if (res.status !== 200 && res.status !== 201) {
-					throw new Error('Signup failed');
+					throw new Error('Login failed');
 				}
 			})
 			.catch((err) => {
@@ -59,10 +52,6 @@ class AuthPage extends Component {
 		return (
 			<form className="auth-form" onSubmit={this.handleSignUp}>
 				<div className="form-control">
-					<label htmlFor="userName">Username:</label>
-					<input type="text" id="userName" ref={this.nameEl} />
-				</div>
-				<div className="form-control">
 					<label htmlFor="email">E-mail:</label>
 					<input type="email" id="email" ref={this.emailEl} />
 				</div>
@@ -71,12 +60,12 @@ class AuthPage extends Component {
 					<input type="password" id="password" ref={this.passwordEl} />
 				</div>
 				<div className="form-actions">
-					<button type="submit">Signup</button>
-					<a href="/login">Or login</a>
+					<button type="submit">login</button>
+					<a href="/signup">Or signup</a>
 				</div>
 			</form>
 		);
 	}
 }
 
-export default AuthPage;
+export default LoginPage;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import './App.css';
 import AuthPage from './containers/auth';
+import LoginPage from './containers/login';
 import BookingsPage from './containers/bookings';
 import HomesPage from './containers/homes';
 import Home from './containers/homePage';
@@ -14,7 +15,8 @@ function App() {
 			<Switch>
 				<Redirect from="/" to="/home" exact />
 				<Route path="/home" component={Home} />
-				<Route path="/auth" component={AuthPage} />
+        <Route path="/signup" component={AuthPage} />
+        <Route path="/login" component={LoginPage} />
 				<Route path="/homes" component={HomesPage} />
 				<Route path="/bookings" component={BookingsPage} />
 			</Switch>
