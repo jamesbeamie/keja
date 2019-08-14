@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../assets/styling/auth.css';
+import loginContext from '../containers/context/loginContext';
 class LoginPage extends Component {
+	static contextType = loginContext;
+
 	constructor(props) {
 		super(props);
 
@@ -41,6 +44,18 @@ class LoginPage extends Component {
 				if (res.status !== 200 && res.status !== 201) {
 					throw new Error('Login failed');
 				}
+				return res.json();
+			})
+			.then((resData) => {
+				if (resData.data.login.token) {
+					// pass the backend data to the context
+					this.context.login(
+						resData.data.login.token,
+						resData.data.login.userId,
+						resData.data.login.tokenExpires
+					);
+				}
+				// console.log('result', resData);
 			})
 			.catch((err) => {
 				console.log(err);
