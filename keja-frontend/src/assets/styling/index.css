@@ -1,0 +1,14 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+.btn{
+	color: white;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 3px 3px 5px rgb(3, 83, 88);
+}

@@ -1,0 +1,44 @@
+.home-control {
+	border: 1px solid red;
+	text-align: center;
+	padding: 1rem;
+	margin: 8rem auto;
+	width: 30rem;
+	max-width: 80%;
+}
+/* .home-actions button {
+	color: white;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 3px 3px 5px rgb(3, 83, 88);
+}
+.home-actions button:hover {
+	color: grey;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 1px 1px 5px rgb(3, 83, 88);
+}
+.home-actions button:active {
+	color: red;
+	background-color: rgb(98, 199, 98);
+	font: inherit;
+	border: 1px solid rgb(4, 68, 4);
+	border-radius: 3px;
+	margin-right: 1rem;
+	box-shadow: 1px 1px 5px rgb(3, 83, 88);
+	outline-style: none;
+	outline-color: white;
+}
+.home-actions a {
+	color: rgb(142, 153, 139);
+	text-decoration: none;
+}
+.home-actions a:hover {
+	color: rgb(99, 128, 92);
+} */
