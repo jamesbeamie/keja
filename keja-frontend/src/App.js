@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import './App.css';
+// import './App.css';
 import AuthPage from './containers/auth';
 import LoginPage from './containers/login';
 import BookingsPage from './containers/bookings';
