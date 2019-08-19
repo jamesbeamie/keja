@@ -13,7 +13,8 @@ const HomeList = (props) => {
 				name={home.name}
 				price={home.price}
 				owner={home.creator._id}
-				user={props.authorisedUser}
+                user={props.authorisedUser}
+                onDetail={props.homeDetails}
 			/>
 		);
 	});

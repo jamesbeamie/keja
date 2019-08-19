@@ -9,7 +9,8 @@ class HomesPage extends Component {
 	state = {
 		creating: false,
 		homeArray: [],
-		isLoading: false
+		isLoading: false,
+		selectedHome: null
 	};
 
 	constructor(props) {
@@ -35,6 +36,13 @@ class HomesPage extends Component {
 	handleCancel = () => {
 		this.setState({
 			creating: false
+		});
+	};
+
+	showHomeDetails = (homeid) => {
+		this.setState((prevState) => {
+			const viewdHome = prevState.homeArray.find((home) => home._id === homeid);
+			return { selectedHome: viewdHome };
 		});
 	};
 
@@ -190,7 +198,15 @@ class HomesPage extends Component {
 						<button onClick={this.handleCreateHome}> Create Home</button>
 					</div>
 				)}
-				{isLoading ? <Spinner /> : <HomeList homes={homeArray} authorisedUser={this.context.userId} />}
+				{isLoading ? (
+					<Spinner />
+				) : (
+					<HomeList
+						homes={homeArray}
+						authorisedUser={this.context.userId}
+						homeDetails={this.showHomeDetails}
+					/>
+				)}
 			</React.Fragment>
 		);
 	}
