@@ -35,7 +35,8 @@ class HomesPage extends Component {
 
 	handleCancel = () => {
 		this.setState({
-			creating: false
+			creating: false,
+			selectedHome: null
 		});
 	};
 
@@ -45,6 +46,8 @@ class HomesPage extends Component {
 			return { selectedHome: viewdHome };
 		});
 	};
+
+	bookHome = () => {};
 
 	handleConfirm = () => {
 		this.setState({
@@ -164,10 +167,10 @@ class HomesPage extends Component {
 	};
 
 	render() {
-		const { creating, homeArray, isLoading } = this.state;
+		const { creating, homeArray, isLoading, selectedHome } = this.state;
 		return (
 			<React.Fragment>
-				{creating && <Backdrop />}
+				{(creating || selectedHome) && <Backdrop />}
 				{creating && (
 					<Modal
 						title="Add keja"
@@ -175,6 +178,7 @@ class HomesPage extends Component {
 						canConfirm
 						onCancel={this.handleCancel}
 						onConfirm={this.handleConfirm}
+						confirmText="Confirm"
 					>
 						<form>
 							<div className="form-control">
@@ -190,6 +194,20 @@ class HomesPage extends Component {
 								<input type="text" id="price" ref={this.priceEl} />
 							</div>
 						</form>
+					</Modal>
+				)}
+				{selectedHome && (
+					<Modal
+						title={selectedHome.name}
+						canCancel
+						canConfirm
+						onCancel={this.handleCancel}
+						onConfirm={this.handleConfirm}
+						confirmText="Book"
+					>
+						<h4>Name: {selectedHome.name}</h4>
+						<p>Type: {selectedHome.homeType}</p>
+						<h4>Price: {selectedHome.price}</h4>
 					</Modal>
 				)}
 				{this.context.token && (

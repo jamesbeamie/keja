@@ -9,9 +9,14 @@ const HomeItem = (props) => (
 		</div>
 		<div>
 			{props.user === props.owner ? (
-				<p>You're the owner</p>
+				<React.Fragment>
+					<p>You're the owner</p>
+					<button className="btn" onClick={props.onDetail.bind(this, props.homeid)}>
+						View home
+					</button>
+				</React.Fragment>
 			) : (
-				<button className="btn" onClick={props.onDetail.bind(props.homeid)}>
+				<button className="btn" onClick={props.onDetail.bind(this, props.homeid)}>
 					View home
 				</button>
 			)}
