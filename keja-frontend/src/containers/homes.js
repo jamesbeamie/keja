@@ -3,10 +3,13 @@ import '../assets/styling/homes.css';
 import Modal from '../commons/modal';
 import Backdrop from './backdrop/backdrop';
 import loginContext from '../containers/context/loginContext';
+import HomeList from '../components/Homes/homeList';
+import Spinner from '../commons/Spinner';
 class HomesPage extends Component {
 	state = {
 		creating: false,
-		homeArray: []
+		homeArray: [],
+		isLoading: false
 	};
 
 	constructor(props) {
@@ -58,10 +61,6 @@ class HomesPage extends Component {
    						name
     					homeType
     					price
-    					creator{
-							_id
-							email
-						}
                     }
                 }
             `
@@ -81,13 +80,26 @@ class HomesPage extends Component {
 		})
 			.then((res) => {
 				if (res.status !== 200 && res.status !== 201) {
-					throw new Error('Error creating blog');
+					throw new Error('Error creating Home');
 				}
 				return res.json();
 			})
 			.then((resData) => {
 				console.log('resData', resData);
-				this.fetchHomes();
+				// this.fetchHomes();
+				this.setState((prevState) => {
+					const updatedArray = [ ...prevState.homeArray ];
+					updatedArray.push({
+						_id: resData.data.addHome._id,
+						name: resData.data.addHome.name,
+						homeType: resData.data.addHome.homeType,
+						price: resData.data.addHome.price,
+						creator: {
+							_id: this.context.userId
+						}
+					});
+					return { homeArray: updatedArray };
+				});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -95,6 +107,7 @@ class HomesPage extends Component {
 	};
 
 	fetchHomes = () => {
+		this.setState({ isLoading: true });
 		const requestBody = {
 			query: `
                 query {
@@ -122,7 +135,7 @@ class HomesPage extends Component {
 		})
 			.then((res) => {
 				if (res.status !== 200 && res.status !== 201) {
-					throw new Error('Error creating blog');
+					throw new Error('Error creating Home');
 				}
 				return res.json();
 			})
@@ -130,23 +143,20 @@ class HomesPage extends Component {
 				console.log('fetchedData', resData);
 				const homes = resData.data.homes;
 				this.setState({
-					homeArray: homes
+					homeArray: homes,
+					isLoading: false
 				});
 			})
 			.catch((err) => {
 				console.log(err);
+				this.setState({
+					isLoading: false
+				});
 			});
 	};
 
 	render() {
-		const { creating, homeArray } = this.state;
-		const fetchedHomes = homeArray.map((home) => {
-			return (
-				<li key={home._id} className="home_list-item">
-					{home.name}
-				</li>
-			);
-		});
+		const { creating, homeArray, isLoading } = this.state;
 		return (
 			<React.Fragment>
 				{creating && <Backdrop />}
@@ -180,7 +190,7 @@ class HomesPage extends Component {
 						<button onClick={this.handleCreateHome}> Create Home</button>
 					</div>
 				)}
-				<ul className="home_list">{fetchedHomes}</ul>
+				{isLoading ? <Spinner /> : <HomeList homes={homeArray} authorisedUser={this.context.userId} />}
 			</React.Fragment>
 		);
 	}
