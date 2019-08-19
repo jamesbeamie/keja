@@ -9,7 +9,8 @@ class HomesPage extends Component {
 	state = {
 		creating: false,
 		homeArray: [],
-		isLoading: false
+		isLoading: false,
+		selectedHome: null
 	};
 
 	constructor(props) {
@@ -34,9 +35,19 @@ class HomesPage extends Component {
 
 	handleCancel = () => {
 		this.setState({
-			creating: false
+			creating: false,
+			selectedHome: null
 		});
 	};
+
+	showHomeDetails = (homeid) => {
+		this.setState((prevState) => {
+			const viewdHome = prevState.homeArray.find((home) => home._id === homeid);
+			return { selectedHome: viewdHome };
+		});
+	};
+
+	bookHome = () => {};
 
 	handleConfirm = () => {
 		this.setState({
@@ -156,10 +167,10 @@ class HomesPage extends Component {
 	};
 
 	render() {
-		const { creating, homeArray, isLoading } = this.state;
+		const { creating, homeArray, isLoading, selectedHome } = this.state;
 		return (
 			<React.Fragment>
-				{creating && <Backdrop />}
+				{(creating || selectedHome) && <Backdrop />}
 				{creating && (
 					<Modal
 						title="Add keja"
@@ -167,6 +178,7 @@ class HomesPage extends Component {
 						canConfirm
 						onCancel={this.handleCancel}
 						onConfirm={this.handleConfirm}
+						confirmText="Confirm"
 					>
 						<form>
 							<div className="form-control">
@@ -184,13 +196,35 @@ class HomesPage extends Component {
 						</form>
 					</Modal>
 				)}
+				{selectedHome && (
+					<Modal
+						title={selectedHome.name}
+						canCancel
+						canConfirm
+						onCancel={this.handleCancel}
+						onConfirm={this.handleConfirm}
+						confirmText="Book"
+					>
+						<h4>Name: {selectedHome.name}</h4>
+						<p>Type: {selectedHome.homeType}</p>
+						<h4>Price: {selectedHome.price}</h4>
+					</Modal>
+				)}
 				{this.context.token && (
 					<div className="home-control">
 						<h4>Add Home</h4>
 						<button onClick={this.handleCreateHome}> Create Home</button>
 					</div>
 				)}
-				{isLoading ? <Spinner /> : <HomeList homes={homeArray} authorisedUser={this.context.userId} />}
+				{isLoading ? (
+					<Spinner />
+				) : (
+					<HomeList
+						homes={homeArray}
+						authorisedUser={this.context.userId}
+						homeDetails={this.showHomeDetails}
+					/>
+				)}
 			</React.Fragment>
 		);
 	}

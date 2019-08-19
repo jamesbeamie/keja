@@ -1,13 +1,15 @@
 .modal {
 	width: 80%;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	box-shadow: 0 2px 8px rgba(105, 189, 161, 0.26);
 	position: fixed;
 	top: 20vh;
 	left: 5%;
+	color: white;
+	z-index: 100;
 }
 .modal_header {
 	padding: 1rem;
-	background: grey;
+	background: rgba(86, 150, 115);
 }
 .modal_header h1 {
 	margin: 0;
