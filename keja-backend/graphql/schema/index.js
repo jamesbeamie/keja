@@ -1,4 +1,4 @@
-const { buildSchema } = require('graphql');
+const { buildSchema } = require("graphql");
 const graphQLSchema = buildSchema(`
 type Booking {
     home: Home!
@@ -56,5 +56,5 @@ schema{
     query: rootQuery
     mutation: rootMutation
 }
-`)
+`);
 module.exports = graphQLSchema;
