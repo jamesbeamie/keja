@@ -16,8 +16,6 @@ const bookingResolver = {
           _id: booking.id,
           user: user.bind(this, booking._doc.user),
           home: singleHome.bind(this, booking._doc.home)
-          // createdAt: new Date(booking._doc.createdAt).toISOString,
-          // updatedAt: new Date(booking._doc.updatedAt).toISOString
         };
       });
     } catch (err) {
@@ -40,8 +38,6 @@ const bookingResolver = {
       _id: result.id,
       user: user.bind(this, booking._doc.user),
       home: singleHome.bind(this, booking._doc.home)
-      //    createdAt: new Date(result._doc.createdAt).toISOString,
-      //    updatedAt: new Date(result._doc.updatedAt).toISOString
     };
   },
 

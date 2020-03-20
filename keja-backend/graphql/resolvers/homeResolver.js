@@ -22,17 +22,13 @@ const homeResolver = {
       name: args.homeInput.name,
       homeType: args.homeInput.homeType,
       price: +args.homeInput.price,
-      // datePosted: new Date(args.homeInput.date)
       creator: req.userId
     });
     let createdHome;
     try {
-      // homes.push(newHome);
       const res = await newHome.save();
       createdHome = transformHome(res);
       const creator = await User.findById(req.userId);
-      // console.log(res)
-      // return {...res._doc};
       if (!creator) {
         throw new Error("User does not exist .");
       }
@@ -42,7 +38,6 @@ const homeResolver = {
     } catch (err) {
       throw err;
     }
-    // return newHome;
   }
 };
 

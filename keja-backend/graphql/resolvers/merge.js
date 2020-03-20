@@ -43,7 +43,5 @@ const transformHome = home => {
   };
 };
 
-// exports.homes = homes;
-// exports.user = user;
 exports.singleHome = singleHome;
 exports.transformHome = transformHome;

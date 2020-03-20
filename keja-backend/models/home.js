@@ -15,10 +15,6 @@ const homeSchema = new Schema({
     type: Number,
     required: true
   },
-  // datePosted:{
-  //     type: Date,
-  //     required: true
-  // }
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User"
