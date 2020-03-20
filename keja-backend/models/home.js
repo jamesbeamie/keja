@@ -1,28 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
 const homeSchema = new Schema({
-    name:{
-        type: String,
-        required: true
-    },
-    homeType:{
-        type: String,
-        required: true
-    },
-    price:{
-        type: Number,
-        required: true
-    },
-    // datePosted:{
-    //     type: Date,
-    //     required: true
-    // }
-    creator: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+  name: {
+    type: String,
+    required: true
+  },
+  homeType: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  // datePosted:{
+  //     type: Date,
+  //     required: true
+  // }
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
-module.exports = mongoose.model('Home', homeSchema);
+module.exports = mongoose.model("Home", homeSchema);
