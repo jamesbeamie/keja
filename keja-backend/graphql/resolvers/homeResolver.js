@@ -6,7 +6,7 @@ const homeResolver = {
   homes: async () => {
     try {
       const homes = await Home.find();
-      return homes.map(home => {
+      return homes.map((home) => {
         return transformHome(home);
       });
     } catch (err) {
@@ -22,7 +22,7 @@ const homeResolver = {
       name: args.homeInput.name,
       homeType: args.homeInput.homeType,
       price: +args.homeInput.price,
-      creator: req.userId
+      creator: req.userId,
     });
     let createdHome;
     try {
@@ -38,7 +38,7 @@ const homeResolver = {
     } catch (err) {
       throw err;
     }
-  }
+  },
 };
 
 module.exports = homeResolver;

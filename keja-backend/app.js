@@ -34,7 +34,7 @@ app.use(
 
     // resolvers (and should have the same name as their type definition)
     rootValue: rootResolver,
-    graphiql: true
+    graphiql: true,
   })
 );
 
@@ -47,6 +47,6 @@ mongoose
     // console.log('connected')
     app.listen(3001);
   })
-  .catch(err => {
+  .catch((err) => {
     throw err;
   });
