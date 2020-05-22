@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 
 const userAuth = {
-  createUser: async args => {
+  createUser: async (args) => {
     try {
       const available = await User.findOne({ email: args.userInput.email });
       if (available) {
@@ -14,7 +14,7 @@ const userAuth = {
       const user = new User({
         userName: args.userInput.userName,
         email: args.userInput.email,
-        password: hashedpwd
+        password: hashedpwd,
       });
       const result = await user.save();
       return { ...result._doc, password: null };
@@ -35,19 +35,19 @@ const userAuth = {
     const userToken = jwt.sign(
       {
         userId: theUser.id,
-        email: theUser.email
+        email: theUser.email,
       },
       "secretekeyforhashingtoken",
       {
-        expiresIn: "1hr"
+        expiresIn: "1hr",
       }
     );
     return {
       userId: theUser.id,
       token: userToken,
-      tokenExpires: 1
+      tokenExpires: 1,
     };
-  }
+  },
 };
 
 module.exports = userAuth;

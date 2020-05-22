@@ -10,12 +10,12 @@ const bookingResolver = {
 
     try {
       const bookings = await Booking.find();
-      return bookings.map(booking => {
+      return bookings.map((booking) => {
         return {
           ...booking._doc,
           _id: booking.id,
           user: user.bind(this, booking._doc.user),
-          home: singleHome.bind(this, booking._doc.home)
+          home: singleHome.bind(this, booking._doc.home),
         };
       });
     } catch (err) {
@@ -30,14 +30,14 @@ const bookingResolver = {
     const fetchedHome = await Home.findOne({ _id: args.homeId });
     const booking = new Booking({
       user: req.userId,
-      home: fetchedHome
+      home: fetchedHome,
     });
     const result = await booking.save();
     return {
       ...result._doc,
       _id: result.id,
       user: user.bind(this, booking._doc.user),
-      home: singleHome.bind(this, booking._doc.home)
+      home: singleHome.bind(this, booking._doc.home),
     };
   },
 
@@ -53,7 +53,7 @@ const bookingResolver = {
     } catch (err) {
       throw err;
     }
-  }
+  },
 };
 
 module.exports = bookingResolver;
