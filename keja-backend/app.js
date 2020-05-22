@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const graphQLSchema = require("./graphql/schema/index");
 const rootResolver = require("./graphql/resolvers/index");
 const isAuth = require("./middleware/isAuth");
+require("dotenv/config");
 
 const app = express();
 
@@ -38,15 +39,29 @@ app.use(
   })
 );
 
+// mongoose
+//   .connect(
+//     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-fhwxu.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
+//     { useNewUrlParser: true, useUnifiedTopology: true }
+//   )
+//   .then(() => {
+//     // console.log('connected')
+//     app.listen(3001);
+//   })
+//   .catch((err) => {
+//     throw err;
+//   });
+
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-fhwxu.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(`${process.env.LOCAL_DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
-    // console.log('connected')
-    app.listen(3001);
+    console.log("connected: server running on port 3001");
+    app.listen(`${process.env.PORT}` || 3001);
   })
   .catch((err) => {
+    console.log("Problem running the server");
     throw err;
   });
